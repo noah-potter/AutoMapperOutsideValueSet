@@ -8,6 +8,14 @@ using System.Web.Optimization;
 using System.Web.Routing;
 using AutoMapper;
 
+public class test_model { }
+
+public class TestModelDTO
+{
+    public string setInside { get; set; }
+    public string setOutside { get; set; }
+}
+
 namespace AutoMapperOutsideValueSet
 {
     // Note: For instructions on enabling IIS6 or IIS7 classic mode, 
@@ -23,6 +31,18 @@ namespace AutoMapperOutsideValueSet
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+
+            string outsideValue = "outside";
+
+            Mapper.Initialize(cfg =>
+            {
+                string insideValue = null;
+
+                cfg.CreateMap<test_model, TestModelDTO>()
+                    .ForMember(dest => dest.setInside, opt => opt.MapFrom(src => insideValue))
+                    .ForMember(dest => dest.setOutside, opt => opt.MapFrom(src => outsideValue)) // Comment this line out to set insideValue
+                    ;
+            });
         }
     }
 }

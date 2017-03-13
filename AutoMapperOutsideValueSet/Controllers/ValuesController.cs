@@ -11,9 +11,13 @@ namespace AutoMapperOutsideValueSet.Controllers
     public class ValuesController : ApiController
     {
         // GET api/values
-        public IEnumerable<string> Get()
+        public IQueryable<TestModelDTO> Get()
         {
-            return new string[] { "value1", "value2" };
+            IQueryable<test_model> testModels = new List<test_model> {
+                new test_model()
+            }.AsQueryable();
+
+            return testModels.ProjectTo<TestModelDTO>(new { insideValue = "inside" });
         }
 
         // GET api/values/5
